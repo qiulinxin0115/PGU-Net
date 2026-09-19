@@ -57,10 +57,6 @@ Images are read as RGB in [0,1].
 
 ## Training
 
-The main defaults follow the settings: Adam, 200 epochs, batch size 1, learning rate 1e-4 decaying to 1e-5 with cosine annealing, and four unfolding stages. All trainable model branches are optimized jointly. The PBSIR teacher is initialized from the supplied pretrained weights and kept fixed for the parameter-invariance target. Light perturbation supplies the robustness term.
-
-The script additionally exposes crop size (default 256), optional flips, gradient clipping (default 5), light-noise standard deviation (default 0.05), and random seed (default 42).
-
 ```bash
 python train.py --train-low data/LOLv1/train/low --train-high data/LOLv1/train/high --train-normal data/LOLv1/train/normal --pbsir-checkpoint weights/pbsir_pretrained.pth --out-dir runs/lolv1 --device cuda
 ```
@@ -69,13 +65,7 @@ Random crops apply identically to images and normals. `--augment` enables paired
 
 Each epoch saves `latest.pth`. When validation is supplied, improved validation PSNR also saves `best.pth`. The run directory contains the resolved CLI arguments and a JSONL log of all loss terms, learning rates and validation metrics.
 
-Resume using the original training settings and paths, replacing `--pbsir-checkpoint` with `--resume`:
-
-```bash
-python train.py --train-low data/LOLv1/train/low --train-high data/LOLv1/train/high --train-normal data/LOLv1/train/normal --resume runs/lolv1/latest.pth --out-dir runs/lolv1 --device cuda
 ```
-
-Checkpoints preserve the model, fixed teacher, optimizer, scheduler, and random states. Keep the original total `--epochs` value when resuming. For a planned early stop without changing that learning-rate schedule, use `--stop-after-epoch`.
 
 ## Testing and image enhancement
 
