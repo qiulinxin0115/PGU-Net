@@ -61,8 +61,6 @@ Images are read as RGB in [0,1].
 python train.py --train-low data/LOLv1/train/low --train-high data/LOLv1/train/high --train-normal data/LOLv1/train/normal --pbsir-checkpoint weights/pbsir_pretrained.pth --out-dir runs/lolv1 --device cuda
 ```
 
-Random crops apply identically to images and normals. `--augment` enables paired horizontal/vertical flips and corrects the corresponding normal-vector signs. Use `--crop-size 0` with batch size 1 for full-resolution training. Images smaller than the requested crop are rejected rather than silently resized.
-
 Each epoch saves `latest.pth`. When validation is supplied, improved validation PSNR also saves `best.pth`. The run directory contains the resolved CLI arguments and a JSONL log of all loss terms, learning rates and validation metrics.
 
 ```
